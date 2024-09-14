@@ -23,8 +23,10 @@ class S(BaseHTTPRequestHandler):
         self.wfile.write("GET request for {}".format(self.path).encode('utf-8'))
         if on_off:
             GPIO.output(relay, False)
+            on_off = True
         else:
             GPIO.output(relay, True)
+            on_off = False
 
     def do_POST(self):
         content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
