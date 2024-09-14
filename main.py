@@ -1,7 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import logging
 import RPi.GPIO as GPIO
-import time
 
 relay = 7
 GPIO.setmode(GPIO.BOARD)
