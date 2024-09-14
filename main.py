@@ -9,6 +9,14 @@ GPIO.setup(relay, GPIO.OUT)
 on_off = False
 GPIO.output(relay, False)
 
+def relay():
+    if on_off:
+            GPIO.output(relay, False)
+            on_off = True
+        else:
+            GPIO.output(relay, True)
+            on_off = False
+
 
 class S(BaseHTTPRequestHandler):
     def _set_response(self):
@@ -16,16 +24,10 @@ class S(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html')
         self.end_headers()
 
-    def do_GET(self, on_off):
+    def do_GET(self):
         logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(self.path), str(self.headers))
         self._set_response()
         self.wfile.write("GET request for {}".format(self.path).encode('utf-8'))
-        if on_off:
-            GPIO.output(relay, False)
-            on_off = True
-        else:
-            GPIO.output(relay, True)
-            on_off = False
 
     def do_POST(self):
         content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
@@ -35,6 +37,7 @@ class S(BaseHTTPRequestHandler):
 
         self._set_response()
         self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
+        relay()
 
 
 def run(server_class=HTTPServer, handler_class=S, port=8080):
