@@ -12,10 +12,10 @@ GPIO.output(relay_pin, False)
 def relay():
     if on_off:
         GPIO.output(relay_pin, False)
-        on_off = True
+        on_off = False
     else:
         GPIO.output(relay_pin, True)
-        on_off = False
+        on_off = True
 
 
 class S(BaseHTTPRequestHandler):
