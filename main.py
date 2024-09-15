@@ -24,7 +24,7 @@ def relay():
 app = Flask(__name__)
 
 
-@app.route('/hello')
+@app.route('/')
 def hello():
     relay()
     return "hello from the Raspberry Pi!"
