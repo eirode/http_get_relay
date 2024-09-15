@@ -2,8 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import logging
 import RPi.GPIO as GPIO
 
-if etat == None:
-    etat = False
+etat = False
 
 relay_pin = 7
 GPIO.setmode(GPIO.BOARD)
@@ -18,6 +17,7 @@ def relay():
     else:
         GPIO.output(relay_pin, True)
         etat = True
+    print(etat)
 
 
 class S(BaseHTTPRequestHandler):
