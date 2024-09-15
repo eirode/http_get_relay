@@ -2,13 +2,12 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import logging
 import RPi.GPIO as GPIO
 
-etat = False
+if etat == None:
+    etat = False
 
 relay_pin = 7
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(relay_pin, GPIO.OUT)
-
-GPIO.output(relay_pin, False)
 
 
 def relay():
