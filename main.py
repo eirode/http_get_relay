@@ -2,14 +2,16 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import logging
 import RPi.GPIO as GPIO
 
+etat = False
+
 relay_pin = 7
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(relay_pin, GPIO.OUT)
 
-on_off = False
 GPIO.output(relay_pin, False)
 
-def relay():
+
+def relay(on_off):
     if on_off:
         GPIO.output(relay_pin, False)
         on_off = False
@@ -37,7 +39,7 @@ class S(BaseHTTPRequestHandler):
 
         self._set_response()
         self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
-        relay()
+        relay(etat)
 
 
 def run(server_class=HTTPServer, handler_class=S, port=8080):
