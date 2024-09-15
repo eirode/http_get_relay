@@ -1,23 +1,6 @@
 import socket
-import RPi.GPIO as GPIO
 
-etat = False
 HOST, PORT = '', 8888
-
-relay_pin = 7
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(relay_pin, GPIO.OUT)
-
-
-def relay():
-    global etat
-    if etat:
-        GPIO.output(relay_pin, False)
-        etat = False
-    else:
-        GPIO.output(relay_pin, True)
-        etat = True
-
 
 listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -27,7 +10,7 @@ print(f'Serving HTTP on port {PORT} ...')
 while True:
     client_connection, client_address = listen_socket.accept()
     request_data = client_connection.recv(1024)
-    relay()
+    print("got it")
 
     http_response = b"""\
 HTTP/1.1 200 OK
