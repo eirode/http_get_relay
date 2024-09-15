@@ -1,5 +1,6 @@
 import socket
 import RPi.GPIO as GPIO
+import time
 
 etat = False
 HOST, PORT = '', 8888
@@ -7,6 +8,7 @@ HOST, PORT = '', 8888
 relay_pin = 7
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(relay_pin, GPIO.OUT)
+GPIO.output(relay_pin, False)
 
 
 def relay():
@@ -17,6 +19,7 @@ def relay():
     else:
         GPIO.output(relay_pin, True)
         etat = True
+    time.sleep(0.5)
 
 
 listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
