@@ -4,6 +4,7 @@ import time
 
 etat = False
 HOST, PORT = '', 8888
+verif_var = 0
 
 relay_pin = 7
 GPIO.setmode(GPIO.BOARD)
@@ -19,7 +20,13 @@ def relay():
     else:
         GPIO.output(relay_pin, True)
         etat = True
-    time.sleep(0.5)
+
+
+def verif():
+    global verif_var
+    verif_var += 1
+    if verif_var % 2 == 0:
+        relay()
 
 
 listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -30,7 +37,7 @@ print(f'Serving HTTP on port {PORT} ...')
 while True:
     client_connection, client_address = listen_socket.accept()
     request_data = client_connection.recv(1024)
-    relay()
+    verif()
 
     http_response = b"""\
 HTTP/1.1 200 OK
