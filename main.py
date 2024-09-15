@@ -11,13 +11,14 @@ GPIO.setup(relay_pin, GPIO.OUT)
 GPIO.output(relay_pin, False)
 
 
-def relay(on_off):
-    if on_off:
+def relay():
+    global etat
+    if etat:
         GPIO.output(relay_pin, False)
-        on_off = False
+        etat = False
     else:
         GPIO.output(relay_pin, True)
-        on_off = True
+        etat = True
 
 
 class S(BaseHTTPRequestHandler):
@@ -39,7 +40,7 @@ class S(BaseHTTPRequestHandler):
 
         self._set_response()
         self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
-        relay(etat)
+        relay()
 
 
 def run(server_class=HTTPServer, handler_class=S, port=8080):
